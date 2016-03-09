@@ -23,10 +23,12 @@ public class MainLoop {
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
 		
-		Shader shader = new Shader("src/shaders/vertexShader.txt", "src/shaders/fragmentShader.txt");
-		
-		//shader1 not used
-		Shader shader1 = new Shader("src/shaders/vertexShader1.txt", "src/shaders/fragmentShader1.txt");
+		Shader shaderSun = new Shader("src/shaders/vertexShaderSun.txt", 
+				"src/shaders/fragmentShaderSun.txt");
+		Shader shaderEarth = new Shader("src/shaders/vertexShaderEarth.txt", 
+				"src/shaders/fragmentShaderEarth.txt");
+		Shader shaderMoon = new Shader("src/shaders/vertexShaderMoon.txt", 
+				"src/shaders/fragmentShaderMoon.txt");
 		
 		float vertices[] = {
 			     0.5f,  0.5f, 0.0f,  // Top Right
@@ -48,8 +50,9 @@ public class MainLoop {
 //		RawModel sphere = modelLoader.getModel();
 	//	RawModel cube = next.getModel();
 		
-		Model sphere = new Model("res/tsphere.obj", shader);
-		Model cube = new Model("res/cube.obj", shader1);
+		Model sun = new Model("res/sun.obj", shaderSun);
+		Model earth = new Model("res/earth.obj", shaderEarth);
+		Model moon = new Model("res/moon.obj", shaderMoon);
 		
 		//RenderModel render = new RenderModel(shader1);
 				
@@ -57,29 +60,52 @@ public class MainLoop {
 		float y = 0.0f;
 		float z = 0.0f;
 		
-		Camera camera = new Camera();
+		Camera camera = new Camera(new Vector3f(0,0,5), 0, 0);
 		
 		float angle = 0.0f;
 		while(!Display.isCloseRequested()) {
 			init();
 			
-			Matrix4f transform = new Matrix4f();
-			transform.setIdentity();
+			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+				shaderSun.cleanShader();
+				shaderEarth.cleanShader();
+				shaderMoon.cleanShader();
+				
+				sun.getModelLoader().getLoader().clear();
+				earth.getModelLoader().getLoader().clear();
+				moon.getModelLoader().getLoader().clear();
+				DisplayManager.closeDisplay();
+				System.exit(0);
+			}
 			
-			Matrix4f transformCube = new Matrix4f();
-			transformCube.setIdentity();
+			Matrix4f transformSun = new Matrix4f();
+			transformSun.setIdentity();
+			
+			Matrix4f transformEarth = new Matrix4f();
+			transformEarth.setIdentity();
+			
+			Matrix4f transformMoon = new Matrix4f();
+			transformMoon.setIdentity();
 			
 			//Matrix4f transform = Maths.createTransMatrix(new Vector3f(-1,0,0),
 				//	new Vector3f(0,0,0), new Vector3f(-0.3f, 0.5f, 1));
 			
 			//transform.translate(new Vector3f(x, y, z));
 			//transform.scale(new Vector3f(-0.2f, -0.2f, -0.2f));
-			transform.rotate(angle, new Vector3f(1,0,0));
-			transform.rotate(angle, new Vector3f(0,1,0));
-
-			transformCube.translate(new Vector3f(-2.5f, y, z));
-			transformCube.rotate(angle, new Vector3f(1,0,0));
-			transformCube.rotate(angle, new Vector3f(0,1,0));
+			//transform.rotate(angle, new Vector3f(1,0,0));
+			//transform.rotate(angle, new Vector3f(0,1,0));
+			transformSun.translate(new Vector3f(-0.9f, y, z));
+			transformEarth.translate(new Vector3f(1.2f, y, z));
+			transformMoon.translate(new Vector3f(0.87f, y, z));
+			//transformCube.rotate(angle, new Vector3f(1,0,0));
+			//transformCube.rotate(angle, new Vector3f(0,1,0));
+			transformSun.scale(new Vector3f(-0.55f, 1, 1));
+			transformEarth.scale(new Vector3f(-0.55f, 1, 1));
+			transformMoon.scale(new Vector3f(-0.55f, 1, 1));
+			
+			transformSun.rotate(angle, new Vector3f(0,1,0));
+			transformEarth.rotate(angle, new Vector3f(0,1,0));
+			transformMoon.rotate(angle, new Vector3f(0,1,0));
 			
 			angle += 0.01f;
 			camera.moveCamera();
@@ -96,23 +122,31 @@ public class MainLoop {
 			//cube.render();
 			
 			//shader.useShader();
-			sphere.init(camera);
-			sphere.transform(transform);
-			sphere.render();
+			sun.init(camera);
+			sun.transform(transformSun);
+			sun.render();
 			//shader.loadViewMatrix(camera);
-			cube.init(camera);
-			cube.transform(transformCube);
-			cube.render();
+			earth.init(camera);
+			earth.transform(transformEarth);
+			earth.render();
+			
+			moon.init(camera);
+			moon.transform(transformMoon);
+			moon.render();
 			
 			//shader.loadViewMatrix(camera);
 			//render.render(sphere);
 			DisplayManager.updateDisplay();
 			
 		}
-		shader.cleanShader();
+		shaderSun.cleanShader();
+		shaderEarth.cleanShader();
+		shaderMoon.cleanShader();
+		
 		//loader.clear();
-		sphere.getModelLoader().getLoader().clear();	
-		//cube.getModelLoader().getLoader().clear();
+		sun.getModelLoader().getLoader().clear();	
+		earth.getModelLoader().getLoader().clear();
+		moon.getModelLoader().getLoader().clear();
 		
 		//modelLoader.getLoader().clear();	
 		//next.getLoader().clear();

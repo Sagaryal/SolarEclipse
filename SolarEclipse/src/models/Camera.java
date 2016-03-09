@@ -6,11 +6,17 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
 
-	private Vector3f position = new Vector3f(0,0,0);
+	private Vector3f position;
 	private float pitch;
 	private float yaw;
 	private float roll;
 	private float speed = 0.06f;
+	
+	public Camera(Vector3f position, float pitch, float yaw) {
+		this.position = position;
+		this.pitch = pitch;
+		this.yaw = yaw;
+	}
 	
 	public void moveCamera() {
 		System.out.println("camerea move");
@@ -34,6 +40,25 @@ public class Camera {
 			System.out.println("A");
 			position.x -= speed;
 		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_Q)) {
+			System.out.println("Q");
+			pitch -= 0.3f;
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_E)) {
+			System.out.println("E");
+			pitch += 0.3f;
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			System.out.println("A");
+			yaw += 0.3f;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+			System.out.println("A");
+			yaw -= 0.3f;
+		}
 	}
 	
 	public Matrix4f getViewMatrix() {
@@ -42,7 +67,7 @@ public class Camera {
 		
 		Matrix4f.rotate((float) Math.toRadians(this.getPitch()), new Vector3f(1,0,0), viewMatrix, viewMatrix);
 		Matrix4f.rotate((float) Math.toRadians(this.getYaw()), new Vector3f(0,1,0), viewMatrix, viewMatrix);
-		
+		System.out.println("viewmatrix: " + this.getPitch() + " " + this.getYaw());
 		Vector3f cameraPos = this.getPosition();
 		Vector3f negCameraPos = new Vector3f(-cameraPos.x, -cameraPos.y, -cameraPos.z);
 		Matrix4f.translate(negCameraPos, viewMatrix, viewMatrix);

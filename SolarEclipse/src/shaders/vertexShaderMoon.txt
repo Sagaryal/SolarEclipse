@@ -11,6 +11,6 @@ uniform mat4 view;
 void main(void) {
 	
 	gl_Position = projection * view * transformation * vec4(position, 1.0);
-	color = vec3(1.0, 1.0, position.x+0.2);
+	color = vec3(1.0, 1.0, 1.0);
 	
 }

@@ -18,7 +18,7 @@ public class Model {
 	private RawModel rawModel;
 	
 	private RenderModel render; 
-	private Shader shader;
+	private Shader shader = null;
 	
 	public Model(String path, Shader shader) {
 		modelLoader = new ModelLoader(path);
