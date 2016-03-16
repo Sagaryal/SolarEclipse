@@ -54,13 +54,13 @@ public class MainLoop {
 		
 		Model sun = new Model("res/mysun.obj", shaderSun);
 		Model earth = new Model("res/myearth.obj", shaderEarth);
-		Model moon = new Model("res/moon.obj", shaderMoon);
+		Model moon = new Model("res/MOON.obj", shaderMoon);
 		
 		TexturedModel sunTexture = 	sun.loadTexture("sun_tex.png");
 		TexturedModel earthTexture = earth.loadTexture("earth_sth.jpg");
 		TexturedModel MoonTexture = moon.loadTexture("moon.jpg");
 		
-		Light light = new Light(new Vector3f(-0.9f,0f,1.0f), new Vector3f(1,1,1));
+		Light light = new Light(new Vector3f(0,0,0), new Vector3f(1,1,1));
 		//earthTexture.setShineDamper(16);
 		//earthTexture.setReflectivity(0.5f);
 		//RenderModel render = new RenderModel(shader1);
@@ -69,8 +69,8 @@ public class MainLoop {
 		float y = 0.0f;
 		float z = 0.0f;
 		
-		Camera camera = new Camera(new Vector3f(0,0,5), 0, 0);
-		
+		Camera camera = new Camera(new Vector3f(0.0f,4.2f,7f), 30, 0);
+	
 		float sx = 1.0f;
 		float sy = 1.0f;
 		float sz = 1.0f;
@@ -140,22 +140,25 @@ public class MainLoop {
 			//transform.rotate(angle, new Vector3f(0,1,0));
 	
 			
-			transformEarth.translate(new Vector3f(1.2f, y, z));
-			transformEarth.scale(new Vector3f(0.55f, sy, sz));
-			transformEarth.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
-			
 			transformSun.translate(light.getPosition());
 			//transformSun.translate(new Vector3f(-0.9f, y, z));
-			transformSun.scale(new Vector3f(0.55f, 1, 1));
+			transformSun.scale(new Vector3f(0.45f, 0.70f, 0.45f));
 			//transformSun.rotate(angle, new Vector3f(0,1,0));
 			
 			
+			transformEarth.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
+			transformEarth.translate(new Vector3f(2.0f, y, z));
+			transformEarth.scale(new Vector3f(0.2f, 0.35f, 0.2f));
+			transformEarth.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
+			
 
-			transformMoon.translate(new Vector3f(1.2f, 0, z));
-			transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,0,1));
+			//transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
+			//transformMoon.translate(new Vector3f(2.0f, y, z));
+			transformMoon.translate(new Vector3f(2.0f, 0, z));
+			transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
 
-			transformMoon.translate(new Vector3f(0,1.4f,0));
-			transformMoon.scale(new Vector3f(sx, sy, sz));
+			transformMoon.translate(new Vector3f(0.5f,0,0));
+			transformMoon.scale(new Vector3f(0.3f, 0.5f, 0.3f));
 			transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
 			
 			//transformCube.rotate(angle, new Vector3f(1,0,0));
@@ -165,7 +168,7 @@ public class MainLoop {
 			if(angle >= 360.0f)
 				angle = 0.0f;
 			
-			System.out.println("angle: " + angle);
+			//System.out.println(angle);
 			camera.moveCamera();
 			//render.init();
 			

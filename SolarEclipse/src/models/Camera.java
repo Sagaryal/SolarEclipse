@@ -25,31 +25,39 @@ public class Camera {
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			//System.out.println("W");
 			position.z -= speed * multiplier;
+			System.out.println("Z: " + position.z);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			//System.out.println("D");
 			position.x += speed * multiplier;
+			System.out.println("X: " + position.x);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
 			//System.out.println("S");
 			//System.out.println("S: " + position.z);
 			position.z += speed * multiplier;
+			System.out.println("Z: " + position.z);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			//System.out.println("A");
 			position.x -= speed * multiplier;
+			System.out.println("X: " + position.x);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_Q)) {
 			pitch -= 0.3f;
+			if(pitch <= -89)
+				pitch = -89;
 			System.out.println("pitch: " + pitch);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_E)) {
 			pitch += 0.3f;
+			if(pitch >= 89)
+				pitch = 89;
 			System.out.println("pitch: " + pitch);
 		}
 		
