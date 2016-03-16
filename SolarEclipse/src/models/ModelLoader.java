@@ -7,27 +7,30 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import render.Loader;
-import render.RawModel;
 
 public class ModelLoader {
 
 	private ArrayList<Vector3f> vertices;
 	private ArrayList<Vector3f> normals;
 	private ArrayList<Integer> indices;
+	private ArrayList<Vector2f> textures;
 	
 	private Loader loader;
 	private float[] verticesArray;
 	private int[] indicesArray;
 	private float[] normalsArray;
+	private float[] texturesArray;
 	
 	public ModelLoader(String path) {
 		loader = new Loader();
 		
 		vertices = new ArrayList<Vector3f>();
 		normals = new ArrayList<Vector3f>();
+		textures = new ArrayList<Vector2f>();
 		indices = new ArrayList<Integer>();
 		
 		BufferedReader reader = null;
@@ -53,6 +56,16 @@ public class ModelLoader {
 					//model.addVertex(vertex);
 					//System.out.println("vertex : " + x + " " + y + " " + z);
 				}
+				if(line.startsWith("vt ")) {
+					float x = Float.valueOf(line.split(" ")[1]);
+					float y = Float.valueOf(line.split(" ")[2]);
+					Vector2f texture = new Vector2f(x, y);
+					textures.add(texture);
+					
+
+					//System.out.println("texture: " + x + " " + y);
+					
+				}
 				if(line.startsWith("vn ")) {
 					float x = Float.valueOf(line.split(" ")[1]);
 					float y = Float.valueOf(line.split(" ")[2]);
@@ -77,6 +90,7 @@ public class ModelLoader {
 					//Vector3f vertex = new Vector3f(x1, y1, z1);
 					//Vector3f normal = new Vector3f(x2, y2, z2);
 					
+					texturesArray = new float[vertices.size() * 2];
 					normalsArray = new float[vertices.size() * 3];
 					break;
 					//model.addFace(new Face(vertex, normal));
@@ -129,6 +143,10 @@ public class ModelLoader {
 		int vertexPos = Integer.valueOf(vertex[0]) - 1;
 		//System.out.println(vertexPos);
 		indices.add(vertexPos);
+		Vector2f texture = textures.get(Integer.valueOf(vertex[1]) - 1);
+		texturesArray[vertexPos * 2] = texture.x;
+		texturesArray[vertexPos * 2 + 1] = 1 - texture.y;
+		
 		Vector3f normal = normals.get(Integer.valueOf(vertex[2]) - 1);
 		normalsArray[vertexPos * 3] = normal.x;
 		normalsArray[vertexPos * 3 + 1] = normal.y;
@@ -141,7 +159,7 @@ public class ModelLoader {
 	 
 	public RawModel getModel() {
 		
-		return loader.loadToVAO(verticesArray, indicesArray);
+		return loader.loadToVAO(verticesArray, texturesArray, normalsArray, indicesArray);
 	}
 	
 }

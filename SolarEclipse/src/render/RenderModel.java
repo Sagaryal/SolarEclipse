@@ -1,6 +1,7 @@
 package render;
 
 import models.Model;
+import models.RawModel;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -19,6 +20,10 @@ public class RenderModel {
 	private final float FAR_PLANE = 1000.0f;
 	
 	public RenderModel(Shader shader) {
+		
+		//Doesnot display back faces of model or inside
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_BACK);
 		projectionMatrix();
 		shader.useShader();
 		shader.loadProjectionMatrix(projectionMatrix);
@@ -29,7 +34,7 @@ public class RenderModel {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 	}
 	
 	public void render(Model model) {

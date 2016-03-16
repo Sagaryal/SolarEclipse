@@ -1,5 +1,7 @@
 package shaders;
 
+import items.Light;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class Shader {
 
@@ -21,6 +24,10 @@ public class Shader {
 	private int locationTransMatrix;
 	private int locationProjectionMatrix;
 	private int locationViewMatrix;
+	private int locationLightPosition;
+	private int locationLightColor;
+	//private int locationShineDamper;
+	//private int locationReflectivity;
 	
 	private FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
 	
@@ -37,6 +44,10 @@ public class Shader {
 		locationTransMatrix = getUniformLocation("transformation");
 		locationProjectionMatrix = getUniformLocation("projection");
 		locationViewMatrix = getUniformLocation("view");
+		locationLightPosition = getUniformLocation("lightPosition");
+		locationLightColor = getUniformLocation("lightColor");
+		//locationShineDamper = getUniformLocation("shineDamper");
+		//locationReflectivity = getUniformLocation("reflectivity");
 	}
 	
 	public void useShader() {
@@ -62,6 +73,27 @@ public class Shader {
 		GL20.glUniformMatrix4(location, false, matrixBuffer);
 
 	}
+	
+	public void loadLight(Light light) {
+		loadVector(locationLightPosition, light.getPosition());
+		loadVector(locationLightColor, light.getColor());
+	}
+	
+	private void loadVector(int location, Vector3f vector) {
+		GL20.glUniform3f(location, vector.x, vector.y, vector.z);
+	}
+	
+	
+	public void loadShineVariables(float damper, float reflectivity) {
+		//loadFloat(locationShineDamper, damper);
+		//loadFloat(locationReflectivity, reflectivity);
+	}
+	
+	/*
+	public void loadFloat(int location, float value) {
+		GL20.glUniform1f(location, value);
+	}
+	*/
 	
 	public void loadTransformationMatrix(Matrix4f matrix) {
 		loadMatrix(locationTransMatrix, matrix);
@@ -110,6 +142,8 @@ public class Shader {
 	
 	private void bindAttributes() {
 		GL20.glBindAttribLocation(programID, 0, "position");
+		GL20.glBindAttribLocation(programID, 1, "textureCoords");
+		GL20.glBindAttribLocation(programID, 2, "normal");
 	}
 	
 }
