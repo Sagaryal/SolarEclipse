@@ -3,6 +3,7 @@
 in vec2 out_texture_coords;
 in vec3 surfaceNormal;
 in vec3 lightVector;
+in vec3 moonVector;
 
 out vec4 out_color;
 
@@ -18,5 +19,12 @@ void main(void) {
 	float brightness = max(product, 0.1);
 	vec3 diffuse = brightness * lightColor;
 	
-	out_color = vec4(diffuse, 1.0) * texture(textureSampler, out_texture_coords);
+	
+	vec3 unitMoonVector = normalize(moonVector);
+	float prod = dot(unitNormal, unitMoonVector);
+	float darkness = max(prod, 0.1);
+	vec3 temp = darkness * lightColor;
+	vec3 diffuseMoon = vec3(1-temp.x,1-temp.y,1-temp.z);
+	
+	out_color = vec4(diffuseMoon, 1.0) * vec4(diffuse, 1.0) * texture(textureSampler, out_texture_coords);
 }

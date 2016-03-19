@@ -23,6 +23,7 @@ public class Model {
 	private RenderModel render; 
 	private Shader shader = null;
 	private Light light = null;
+	private Vector3f moonPos;
 	
 	public Model(String path, Shader shader) {
 		modelLoader = new ModelLoader(path);
@@ -31,11 +32,17 @@ public class Model {
 		render = new RenderModel(shader);
 		//light = new Light(new Vector3f(-0.9f,0.0f,0.0f), new Vector3f(1,1,1));
 		
+		
 	}
 	
 	public void loadLight(Light light) {
 		this.light = light;
 		shader.loadLight(light);
+	}
+	
+	public void loadShadow(Vector3f vector) {
+		this.moonPos = vector;
+		shader.loadShadow(this.moonPos);
 	}
 	
 	public TexturedModel loadTexture(String file) {

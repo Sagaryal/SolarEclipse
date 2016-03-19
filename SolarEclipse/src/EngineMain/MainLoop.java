@@ -146,7 +146,7 @@ public class MainLoop {
 			//transformSun.rotate(angle, new Vector3f(0,1,0));
 			
 			
-			transformEarth.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
+			//transformEarth.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
 			transformEarth.translate(new Vector3f(2.0f, y, z));
 			transformEarth.scale(new Vector3f(0.2f, 0.35f, 0.2f));
 			transformEarth.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
@@ -154,8 +154,8 @@ public class MainLoop {
 
 			//transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
 			//transformMoon.translate(new Vector3f(2.0f, y, z));
-			transformMoon.translate(new Vector3f(2.0f, 0, z));
-			transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
+			transformMoon.translate(new Vector3f(1.0f, 0, z));
+			//transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
 
 			transformMoon.translate(new Vector3f(0.5f,0,0));
 			transformMoon.scale(new Vector3f(0.3f, 0.5f, 0.3f));
@@ -189,6 +189,9 @@ public class MainLoop {
 			//shader.loadViewMatrix(camera);
 			earth.init(camera);
 			earth.loadLight(light);
+			
+			earth.loadShadow(new Vector3f(1.5f, 0, 0));
+			
 			earth.transform(transformEarth);
 			earth.render();
 			

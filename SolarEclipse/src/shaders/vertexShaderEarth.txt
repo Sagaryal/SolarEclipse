@@ -7,11 +7,13 @@ in vec3 normal;
 out vec2 out_texture_coords;
 out vec3 surfaceNormal;
 out vec3 lightVector; 
+out vec3 moonVector;
 
 uniform mat4 transformation;
 uniform mat4 projection;
 uniform mat4 view;
 uniform vec3 lightPosition;
+uniform vec3 moonPos;
 
 void main(void) {
 	
@@ -21,4 +23,6 @@ void main(void) {
 	
 	surfaceNormal = (transformation * vec4(normal, 0.0)).xyz;
 	lightVector = lightPosition - worldPosition.xyz;
+	
+	moonVector = moonPos - worldPosition.xyz;
 }

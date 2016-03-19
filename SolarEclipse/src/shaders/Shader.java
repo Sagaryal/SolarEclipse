@@ -28,6 +28,7 @@ public class Shader {
 	private int locationLightColor;
 	//private int locationShineDamper;
 	//private int locationReflectivity;
+	private int locationShadow;
 	
 	private FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
 	
@@ -48,6 +49,7 @@ public class Shader {
 		locationLightColor = getUniformLocation("lightColor");
 		//locationShineDamper = getUniformLocation("shineDamper");
 		//locationReflectivity = getUniformLocation("reflectivity");
+		locationShadow = getUniformLocation("moonPos");
 	}
 	
 	public void useShader() {
@@ -77,6 +79,11 @@ public class Shader {
 	public void loadLight(Light light) {
 		loadVector(locationLightPosition, light.getPosition());
 		loadVector(locationLightColor, light.getColor());
+	}
+	
+	public void loadShadow(Vector3f vector) {
+		loadVector(locationShadow, vector);
+		
 	}
 	
 	private void loadVector(int location, Vector3f vector) {
