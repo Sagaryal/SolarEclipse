@@ -26,8 +26,8 @@ public class Shader {
 	private int locationViewMatrix;
 	private int locationLightPosition;
 	private int locationLightColor;
-	//private int locationShineDamper;
-	//private int locationReflectivity;
+	private int locationShineDamper;
+	private int locationReflectivity;
 	private int locationShadow;
 	
 	private FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
@@ -47,8 +47,8 @@ public class Shader {
 		locationViewMatrix = getUniformLocation("view");
 		locationLightPosition = getUniformLocation("lightPosition");
 		locationLightColor = getUniformLocation("lightColor");
-		//locationShineDamper = getUniformLocation("shineDamper");
-		//locationReflectivity = getUniformLocation("reflectivity");
+		locationShineDamper = getUniformLocation("shineDamper");
+		locationReflectivity = getUniformLocation("reflectivity");
 		locationShadow = getUniformLocation("moonPos");
 	}
 	
@@ -92,15 +92,15 @@ public class Shader {
 	
 	
 	public void loadShineVariables(float damper, float reflectivity) {
-		//loadFloat(locationShineDamper, damper);
-		//loadFloat(locationReflectivity, reflectivity);
+		loadFloat(locationShineDamper, damper);
+		loadFloat(locationReflectivity, reflectivity);
 	}
 	
-	/*
+	
 	public void loadFloat(int location, float value) {
 		GL20.glUniform1f(location, value);
 	}
-	*/
+	
 	
 	public void loadTransformationMatrix(Matrix4f matrix) {
 		loadMatrix(locationTransMatrix, matrix);

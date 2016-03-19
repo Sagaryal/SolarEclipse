@@ -78,7 +78,7 @@ public class Model {
 			GL20.glEnableVertexAttribArray(0);
 			GL20.glEnableVertexAttribArray(1);
 			GL20.glEnableVertexAttribArray(2);
-			//shader.loadShineVariables(texturedModel.getShineDamper(), texturedModel.getReflectivity());
+			shader.loadShineVariables(texturedModel.getShineDamper(), texturedModel.getReflectivity());
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturedModel.getID());
 			//GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, model.getVertexCount());

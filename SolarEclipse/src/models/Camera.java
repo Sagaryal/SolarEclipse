@@ -13,6 +13,13 @@ public class Camera {
 	private float speed = 0.06f;
 	private float multiplier = 0.2f;
 
+	private Vector3f closeViewPos = new Vector3f(0.87f, 0.0f,0.72f);
+	private float closeViewYaw = 50;
+	private float closeViewPitch = 0;
+	
+	private Vector3f persViewPos = new Vector3f(0.0f,4.2f,7f);
+	private float persViewYaw = 0;
+	private float persViewPitch = 30;
 	
 	public Camera(Vector3f position, float pitch, float yaw) {
 		this.position = position;
@@ -22,6 +29,21 @@ public class Camera {
 	
 	public void moveCamera() {
 		//System.out.println("camerea move");
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_P)) {
+			//System.out.println("W");
+			this.position = persViewPos;
+			this.yaw = persViewYaw;
+			this.pitch = persViewPitch;
+		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_C)) {
+			//System.out.println("W");
+			this.position = closeViewPos;
+			this.yaw = closeViewYaw;
+			this.pitch = closeViewPitch;
+		}
+		
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			//System.out.println("W");
 			position.z -= speed * multiplier;
@@ -58,16 +80,17 @@ public class Camera {
 			pitch += 0.3f;
 			if(pitch >= 89)
 				pitch = 89;
-			System.out.println("pitch: " + pitch);
+			//System.out.println("pitch: " + pitch);
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-			//System.out.println("A");
 			yaw += 0.3f;
+			System.out.println("yaw: " + yaw);
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
 			//System.out.println("A");
 			yaw -= 0.3f;
+			System.out.println("yaw: " + yaw);
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_R)) {
 			//System.out.println("S");

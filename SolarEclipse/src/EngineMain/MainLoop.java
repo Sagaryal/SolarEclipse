@@ -61,8 +61,8 @@ public class MainLoop {
 		TexturedModel MoonTexture = moon.loadTexture("moon.jpg");
 		
 		Light light = new Light(new Vector3f(0,0,0), new Vector3f(1,1,1));
-		//earthTexture.setShineDamper(16);
-		//earthTexture.setReflectivity(0.5f);
+		earthTexture.setShineDamper(16);
+		earthTexture.setReflectivity(0.5f);
 		//RenderModel render = new RenderModel(shader1);
 				
 		float x = 0.0f;
@@ -70,7 +70,8 @@ public class MainLoop {
 		float z = 0.0f;
 		
 		Camera camera = new Camera(new Vector3f(0.0f,4.2f,7f), 30, 0);
-	
+		//Camera camera = new Camera(new Vector3f(1.8f,0.0f,1f), 0, 0);
+
 		float sx = 1.0f;
 		float sy = 1.0f;
 		float sz = 1.0f;
@@ -153,9 +154,9 @@ public class MainLoop {
 			
 
 			//transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
-			//transformMoon.translate(new Vector3f(2.0f, y, z));
-			transformMoon.translate(new Vector3f(1.0f, 0, z));
-			//transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
+			transformMoon.translate(new Vector3f(2.0f, y, z));
+			//transformMoon.translate(new Vector3f(1.0f, 0, z));
+			transformMoon.rotate((float) Math.toRadians(angle), new Vector3f(0,1,0));
 
 			transformMoon.translate(new Vector3f(0.5f,0,0));
 			transformMoon.scale(new Vector3f(0.3f, 0.5f, 0.3f));
