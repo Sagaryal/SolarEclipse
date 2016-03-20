@@ -15,7 +15,7 @@ public class RenderModel {
 	
 	private Matrix4f projectionMatrix;
 	
-	private final float F0V = 45;
+	private final float FOV = 45;
 	private final float NEAR_PLANE = 0.1f;
 	private final float FAR_PLANE = 1000.0f;
 	
@@ -60,7 +60,7 @@ public class RenderModel {
 	
 	private void projectionMatrix() {
 		float aspectRatio = Display.getWidth() / Display.getHeight();
-		float yScale = (float) ((1f / Math.tan(Math.toRadians(F0V / 2f))) * aspectRatio);
+		float yScale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))));
 		float xScale = yScale / aspectRatio;
 		float frustumLength = FAR_PLANE - NEAR_PLANE;
 		
@@ -71,6 +71,8 @@ public class RenderModel {
 		projectionMatrix.m23 = -1;
 		projectionMatrix.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustumLength);
 		projectionMatrix.m33 = 0;
+		
+		
 		
 		
 	}
